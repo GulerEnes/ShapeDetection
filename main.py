@@ -78,7 +78,7 @@ def eliminateSimilars(lines_, img):
     This function finds similar lines and deletes all except one.
     :param lines_: output of cv.houghLines()
     :param img: original image to put output on it
-    :return: None
+    :return: lines
     """
     if lines_ is None:  # There is no line
         return None
