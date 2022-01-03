@@ -2,8 +2,7 @@ import cv2 as cv
 import numpy as np
 import math
 
-shape_names = {None: 'circle',
-               3: 'triangle',
+shape_names = {3: 'triangle',
                5: 'pentagon',
                6: 'hexagon'}
 
@@ -66,11 +65,11 @@ def angle_between_two_line(mi, mj):
     mi = math.tan(math.radians(mi))
     mj = math.tan(math.radians(mj))
 
-    pay = (mi - mj)
-    payda = (1 + mi * mj)
-    if payda == 0:
-        payda = 0.0000001
-    return math.degrees(math.atan(pay / payda))
+    a = (mi - mj)
+    b = (1 + mi * mj)
+    if b == 0:
+        b = 0.0000001
+    return math.degrees(math.atan(a / b))
 
 
 def eliminateSimilars(lines_, img):
@@ -137,10 +136,10 @@ for cnt in contours:
     cv.circle(org, (x + w // 2, y + h // 2), 3, (255, 0, 0), thickness=-1)  # Drawing center point
 
     piece = canny[y - 0:y + h + 0, x - 0:x + w + 0]
-    # piece_show = org[y - 0:y + h + 0, x - 0:x + w + 0]
+    piece_show = org[y - 0:y + h + 0, x - 0:x + w + 0]
 
     lines = cv.HoughLines(piece, 1, np.pi / 180, 55)
-    # lines = eliminateSimilars(lines, piece_show)
+    lines = eliminateSimilars(lines, piece_show)
 
     if lines is None:  # If there is no edge
         cv.putText(org, 'circle', (x + w // 2, y + h // 2), cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2, cv.LINE_AA)
