@@ -87,6 +87,7 @@ def eliminateSimilars(lines_, img):
 
     i = 0
     j = 1
+    # (d+1)*n/2  d: number of edge --> O(n)
     while i < len(lines):
         while j < len(lines):
             pi1, pi2, mi = endpoints_of_a_line(lines[i])
