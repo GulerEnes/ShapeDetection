@@ -8,7 +8,9 @@ sys.setrecursionlimit(10 ** 7)
 shape_names = {0: 'circle',
 			   3: 'triangle',
 			   5: 'pentagon',
-			   6: 'hexagon'}
+			   6: 'hexagon',
+			   7: 'heptagon',
+			   8: 'octagon'}
 
 
 def is_point_edge(src, row, col):
@@ -160,9 +162,9 @@ def angle_of_a_line(p1, p2):
 		return alpha
 	elif field == 2:
 		return 180 - alpha
-	elif field == 4:
-		return 180 + alpha
 	elif field == 3:
+		return 180 + alpha
+	elif field == 4:
 		return 360 - alpha
 
 
@@ -222,7 +224,7 @@ def detect_corners(graph):
 	diff = max_l - min_l
 	length_limit = min_l + diff * 0.45  # A corner should be over on this limit
 	angle_limit = 40  # between two corner there must be at least 40 degree
-	if diff < 15:  # There is no corner. So, it is a circle
+	if diff < 12:  # There is no corner. So, it is a circle
 		return 0, []
 
 	corners = list()
@@ -254,7 +256,7 @@ def show(window_name, img):
 	cv.waitKey()
 
 
-image = cv.imread("shapes6.jpeg")
+image = cv.imread("shapes.jpeg")
 # show("image", image)
 
 gray = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
@@ -262,7 +264,7 @@ gray = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
 blured = cv.GaussianBlur(gray, (21, 21), 0)
 # show("blured", blured)
 
-_, th = cv.threshold(blured, 180, 255, cv.THRESH_BINARY)
+_, th = cv.threshold(blured, 150, 255, cv.THRESH_BINARY)
 # show("th", th)
 
 edges = edge_points(th)
